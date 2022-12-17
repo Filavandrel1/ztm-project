@@ -17,8 +17,6 @@ const NavBar = () => {
           <Link to='/signin' className="nav-link">Sign-In</Link>
         </div>
       </div>
-      {/* <Link to='/'>Home</Link> */}
-      {/* <Link to='/shop'>Shop</Link> */}
       <Outlet></Outlet>
     </Fragment>
   )

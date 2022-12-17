@@ -1,4 +1,3 @@
-import { Outlet } from 'react-router-dom';
 import CategoriesMenu from "../components/categories-menu.component";
 
 const Home = () => {
