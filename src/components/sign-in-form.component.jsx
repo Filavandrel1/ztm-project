@@ -2,8 +2,9 @@ import '../styles/sign-in-form.styles.scss';
 import { signInWithGooglePopup, createUserDocumentFromAuth } from '../utils/firebase/firebase.utils'
 import {Button} from './button.component'
 import { FormInput } from './form-input.component';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { signInAccountWithEmailAndPassword } from '../utils/firebase/firebase.utils';
+import { UserContext } from '../contexts/user.context';
 
 const defaultFormFields = {
   email: '',
@@ -14,9 +15,12 @@ export const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const {email, password} = formFields;
 
+  const {setCurrentUser} = useContext(UserContext);
+
   const logGoogleUser = async () => {
     const {user} = await signInWithGooglePopup();
     await createUserDocumentFromAuth(user);
+    setCurrentUser(user);
   }
 
   const resetFormFields = () => {
@@ -33,19 +37,10 @@ export const SignInForm = () => {
 
     try {
       const {user} = await signInAccountWithEmailAndPassword(email, password);  
-      console.log(user);
+      setCurrentUser(user);
       resetFormFields();
     }
     catch (error) {
-      if(error.code === 'auth/invalid-email') {
-        alert('Invalid email');
-      }else if(error.code === 'auth/user-not-found') {
-        alert('User not found');
-      }else if(error.code === 'auth/wrong-password') {
-        alert('Wrong password');
-      }else{
-        console.log(error);
-      }
       switch (error.code) {
         case 'auth/invalid-email':
           alert('Invalid email');
