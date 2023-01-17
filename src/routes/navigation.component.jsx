@@ -8,15 +8,9 @@ import { signOutUser } from '../utils/firebase/firebase.utils';
 
 
 const NavBar = () => {
-  const {currentUser, setCurrentUser} = useContext(UserContext);
-  console.log(currentUser);
+  const {currentUser} = useContext(UserContext);
 
-  const handleSignOut = () => {
-    signOutUser();
-    setCurrentUser(null);
-  }
-
-  const isSignedIn = currentUser ? <span onClick={handleSignOut} className="nav-link">Sign-Out</span> : <Link to='/auth' className="nav-link">Sign-In</Link>;
+  const isSignedIn = currentUser ? <span onClick={signOutUser} className="nav-link">Sign-Out</span> : <Link to='/auth' className="nav-link">Sign-In</Link>;
 
   return(
     <Fragment>
